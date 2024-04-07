@@ -1,2 +1,4 @@
-package model;public class ManagerUsers {
+package model;
+
+public class ManagerUsers {
 }
