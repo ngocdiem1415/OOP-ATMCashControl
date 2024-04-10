@@ -7,62 +7,82 @@ import javax.swing.plaf.nimbus.NimbusLookAndFeel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.math.BigDecimal;
 
-public class Main extends JFrame implements Observer, ActionListener {
-    //    Controller control;
-    ImageSetting image = new ImageSetting();
-//
-//    public Main(Controller control, ImageSetting image) throws HeadlessException {
-//        this.control = control;
-//        this.image = image;
-//    }
-//
-//    @Override
-//    public void actionPerformed(ActionEvent e) {
-//
-//    }
-//
-    @Override
-    public void update() {
-
-    }
-
-
-    private CardLayout card;
-    private JPasswordField passwordField;
-    private JPasswordField changePasswordField;
+public class HomePage extends JFrame implements Observer, ActionListener {
+    Login login;
+    private Observer obs;
+    private Controller controller;
+    private ImageSetting image;
+    private JPasswordField passwordField, changePasswordField;
     private JTextField textSTK;
     private JPanel monitor;
     private JButton[] arrSelection = new JButton[8];
     private JButton btnOk;
 
+    public HomePage (Observer obs ,Controller control, ImageSetting image, Login login){
+        super("ATM");
+        setLookAndFeel();
+        this.obs = obs;
+        this.controller = control;
+        this.image  = new ImageSetting();
+        this.login = login;
+
+        init(); // khoi tao
+        update();
+    }
+
+    public HomePage()  {
+        super("ATM");
+        setLookAndFeel();
+        this.obs = obs;
+        this.controller = controller;
+        this.image  = new ImageSetting();
+        this.login = login;
+
+        passwordField = new JPasswordField();
+        changePasswordField = new JPasswordField();
+
+        init(); // khoi tao
+        update();
+    }
+
     // main method
     public static void main(String[] args) {
-        Main myATM = new Main( );
-        myATM.setTitle("ATM BIDV ĐH NÔNG LÂM");
+        HomePage myATM = new HomePage( );
     }
 
-    public Main() {
-        setLookAndFeel();
-        changePasswordField = new JPasswordField();
-        passwordField = new JPasswordField();
-        card = new CardLayout();
-    }
+    private void init() {
+        setSize(1157, 759);
+        setResizable(false);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setLocationRelativeTo(null);
+        setIconImage();
+//        getContentPane().setLayout(null);
 
-    public void addActionListener(ActionListener ac) {
-        for (JButton jButton : arrSelection) {
-            jButton.addActionListener(ac);
+//        --------------------------------------
+
+        passwordField.setBounds(900, 130, 200, 20);
+        passwordField.setHorizontalAlignment(JPasswordField.CENTER);
+        this.add(passwordField);
+
+        changePasswordField.setBounds(140, 130, 200, 20);
+        changePasswordField.setHorizontalAlignment(JPasswordField.CENTER);
+        this.add(changePasswordField);
+
+
+        // setBounds for buttons and add they
+        int n = arrSelection.length;
+        for (int i = 0; i < n; i++) {
+            arrSelection[i] = new JButton();
+            arrSelection[i].setText(i + "");
+            if (i < n / 2) {
+                arrSelection[i].setBounds(80, 225 + i * 62, 78, 52);
+            } else {
+                arrSelection[i].setBounds(480 + 160 + 60 + 10, 225 + (i - n / 2) * 62, 78, 52);
+            }
+            this.add(arrSelection[i]);
         }
-        btnOk = new JButton("OK");
-        btnOk.setBounds(940, 340, 140, 20);
-        btnOk.addActionListener(ac);
-        textSTK.setBounds(940, 275, 140, 24);
-        textSTK.addActionListener(ac);
-        add(monitor);
-        add(btnOk);
-        add(textSTK);
-        repaint();
+        setVisible(true);
     }
 
     private void setLookAndFeel() {
@@ -80,8 +100,8 @@ public class Main extends JFrame implements Observer, ActionListener {
     }
 
     private void setIconImage() {
-        ImageIcon imageIcon = new ImageIcon(".\\images\\abccc.jpg");
-        Image image = imageIcon.getImage().getScaledInstance(1157, 759, Image.SCALE_SMOOTH);
+        Image imageIcon = image.mainImage();
+        Image image = imageIcon.getScaledInstance(1157, 759, Image.SCALE_SMOOTH);
         setIconImage(image);
         JPanel contet;
         setContentPane(contet = new JPanel() {
@@ -97,162 +117,13 @@ public class Main extends JFrame implements Observer, ActionListener {
 
     }
 
-    public JTextField getTextSTK() {
-        return this.textSTK;
-    }
+    @Override
+    public void actionPerformed(ActionEvent e) {
 
-    public String getMonitor() {
-        String str = "";
-        int n = monitor.getComponentCount();
-        for (int i = 0; i < n; i++) {
-            if (monitor.getComponent(i).isShowing()) {
-                str = monitor.getComponent(i).toString();
-                break;
-            }
-        }
-        char[] x = str.toCharArray();
-        int batdau = 0;
-        int ketthuc = 0;
-        int m = x.length;
-        for (int i = 0; i < m; i++) {
-            if (x[i] == '.') {
-                batdau = i + 1;
-            } else if (x[i] == '[') {
-                ketthuc = i;
-                break;
-            }
-        }
-        System.out.println(str.substring(batdau, ketthuc));
-        return str.substring(batdau, ketthuc);
-    }
-
-    public String getChangePIN() {
-        String newPass = "";
-        char[] x = changePasswordField.getPassword();
-        for (char c : x) {
-            newPass += c;
-        }
-        return newPass;
-    }
-
-    public JPasswordField getChangePasswordField() {
-        return changePasswordField;
-    }
-
-    public String getPass() {
-        String str = "";
-        char[] x = passwordField.getPassword();
-        for (char c : x) {
-            str += c;
-        }
-        passwordField.setText("");
-        passwordField.requestFocus();
-        return str;
-    }
-
-    public JPasswordField getPasswordField() {
-
-        return passwordField;
-    }
-
-    public void showWelcomePage() {
-        this.show("WelcomePage");
-        textSTK.requestFocus();
-    }
-
-    public void showChoosenPage() {
-        this.show("ChoosenPage");
-    }
-
-    public void showWithdrawPage() {
-        this.show("WithdrawPage");
-    }
-
-    public void showCheckAccountPage() {
-        this.show("CheckAccountPage");
-    }
-
-    public void showChangePinPage() {
-        this.show("ChangePinPage");
-        changePasswordField.requestFocus();
-    }
-
-    public void showPinRequestPage() {
-        this.show("PinRequestPage");
-        passwordField.requestFocus();
-    }
-
-    public boolean isWelcomePage() {
-        return getCurrentPage().equals("WelcomePage") ? true : false;
-    }
-
-    public boolean isOtherExchangePage() {
-        return getCurrentPage().equals("OtherExchangePage") ? true : false;
-    }
-
-    public boolean isChoosenPage() {
-        return getCurrentPage().equals("ChoosenPage") ? true : false;
-    }
-
-    public boolean isWithdrawPage() {
-        return getCurrentPage().equals("WithdrawPage") ? true : false;
-    }
-
-    public boolean isChangePINPage() {
-        return getCurrentPage().equals("ChangePinPage") ? true : false;
-    }
-
-    public boolean isCheckAccountPage() {
-        return getCurrentPage().equals("CheckAccountPage") ? true : false;
-    }
-
-    public boolean isExchangeCompletedPage() {
-        return getCurrentPage().equals("ExchangeCompletePage") ? true : false;
-    }
-
-    public boolean isExchangeFailedPage() {
-        return getCurrentPage().equals("ExchangeFailedPage") ? true : false;
-    }
-
-    // cac phuong thuc su dung de chuyen doi giua cac container;
-    public void next() {
-        card.next(monitor);
-    }
-
-    public void previous() {
-        card.previous(monitor);
-    }
-
-    private String currentPage = "";
-
-    public String getCurrentPage() {
-        return currentPage;
-    }
-
-    public void setCurrentPage() {
-        currentPage = getMonitor();
-    }
-
-    public void show(String name) {
-        card.show(monitor, name);
-        setCurrentPage();
-    }
-
-    public void showExchangeFailedPage() {
-        // TODO Auto-generated method stub
-        this.show("ExchangFailedPage");
-    }
-
-    public boolean isPinRequestPage() {
-        // TODO Auto-generated method stub
-        if (getCurrentPage().equals("PinRequestPage")) {
-            return true;
-        }
-        return false;
     }
 
     @Override
-    public void actionPerformed(ActionEvent e) {
+    public void update() {
 
     }
 }

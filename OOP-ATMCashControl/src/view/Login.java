@@ -1,2 +1,4 @@
-package view;public class Login {
+package view;
+
+public class Login {
 }
