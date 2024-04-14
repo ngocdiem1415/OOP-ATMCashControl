@@ -8,16 +8,19 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class Login extends JFrame implements Observer, ActionListener {
+public class MainPage extends JFrame implements Observer, ActionListener {
+    private CardLayout card;
     private Observer obs;
     private Controller controller;
     private ImageSetting image;
+    private String currentPanel = "";
     private JTextField textSTK;
-    private JButton[] arrSelection = new JButton[8];
+    private JButton[] arrSelection;
     private JButton btnOk;
-     WelcomePage monitor;
+    private JPanel monitor;
+    private AbstractPanel welcomePanel, pinRequestPanel, introducePanel, choosenPanel, withdrawPanel ;
 
-    public Login(Observer obs, Controller control, ImageSetting image, Login login) {
+    public MainPage(Observer obs, Controller control, ImageSetting image, MainPage login) {
         super("ATM");
         setLookAndFeel();
         this.obs = obs;
@@ -28,25 +31,35 @@ public class Login extends JFrame implements Observer, ActionListener {
         update();
     }
 
-    public Login() {
+    public MainPage() {
         super("ATM");
         setLookAndFeel();
         this.obs = obs;
         this.controller = controller;
         this.image = new ImageSetting();
 
+        welcomePanel = new WelcomePanel();
+        pinRequestPanel = new PinRequestPanel();
+        introducePanel = new IntroducePanel();
+        choosenPanel = new ChoosenPanel();
+        withdrawPanel = new WithdrawPanel();
+        card = new CardLayout();
+
         textSTK = new JTextField(60);
-        monitor = new WelcomePage();
-        this.add(monitor);
+        btnOk = new JButton("OK");
+        monitor = new JPanel();
+        monitor.setLayout(card);
+        monitor.setBounds(188, 102, 491, 347);
 
         init(); // khoi tao
         update();
+        setVisible(true);
 
     }
 
     // main method
     public static void main(String[] args) {
-        Login myATM = new Login();
+        MainPage myATM = new MainPage();
     }
 
     private void init() {
@@ -57,16 +70,24 @@ public class Login extends JFrame implements Observer, ActionListener {
         setIconImage();
         setLookAndFeel();
 
+//        --------------
+//        monitor.add("WelcomePanel", welcomePanel);
+//        monitor.add("PinRequestPanel", pinRequestPanel);
+//        monitor.add("IntroducePanel", introducePanel);
+//        monitor.add("ChoosenPanel", choosenPanel);
+        add(monitor);
+//        show("WelcomePage");
+
 //        --------------------------------------
         textSTK.setBounds(940, 270, 140, 30);
         textSTK.setHorizontalAlignment(JPasswordField.CENTER);
         this.add(textSTK);
 
-        btnOk = new JButton("OK");
-        btnOk.setBounds(975, 330, 70, 20);
+        btnOk.setBounds(975, 330, 65, 25);
         this.add(btnOk);
 
         // setBounds for buttons and add they
+        arrSelection = new JButton[8];
         int n = arrSelection.length;
         for (int i = 0; i < n; i++) {
             arrSelection[i] = new JButton();
@@ -78,7 +99,7 @@ public class Login extends JFrame implements Observer, ActionListener {
             }
             this.add(arrSelection[i]);
         }
-        setVisible(true);
+
     }
 
     private void setLookAndFeel() {
@@ -101,7 +122,6 @@ public class Login extends JFrame implements Observer, ActionListener {
         setIconImage(image);
         JPanel content;
         setContentPane(content = new JPanel() {
-
             @Override
             protected void paintComponent(Graphics g) {
                 // TODO Auto-generated method stub
@@ -121,5 +141,21 @@ public class Login extends JFrame implements Observer, ActionListener {
     @Override
     public void update() {
 
+    }
+
+    public String getCurrentPage() {
+        return currentPanel;
+    }
+
+    public boolean isWelcomePanel() {
+        return getCurrentPage().equals("WelcomePanel") ? true : false;
+    }
+
+    public JTextField getTextSTK() {
+        return this.textSTK;
+    }
+
+    public void setTextSTK() {
+        this.textSTK = textSTK;
     }
 }

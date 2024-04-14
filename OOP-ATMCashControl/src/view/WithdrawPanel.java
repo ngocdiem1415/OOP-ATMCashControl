@@ -2,9 +2,9 @@ package view;
 
 import javax.swing.*;
 
-class WithdrawPage extends AbstractPage {
+class WithdrawPanel extends AbstractPanel {
     JLabel choosen0, choosen1, choosen2, choosen3, choosen4;
-    public WithdrawPage() {
+    public WithdrawPanel() {
         // TODO Auto-generated constructor stub
         JLabel choosen0 = new JLabel("100.000 VND");
         choosen0.setBounds(10, 262 - 62 - 62, 100, 22);

@@ -3,11 +3,16 @@ package view;
 import javax.swing.*;
 import java.awt.*;
 
-public class WelcomePage extends AbstractPage {
-    public WelcomePage() {
-        // TODO Auto-generated constructor stub
+import static java.awt.Font.BOLD;
+
+public class WelcomePanel extends AbstractPanel {
+    JLabel label;
+    public WelcomePanel() {
         this.setLayout(new BorderLayout());
-        this.add(new JLabel("PLEASE INSERT YOUR CARD", JLabel.CENTER), BorderLayout.CENTER);
+        label = new JLabel("PLEASE INSERT YOUR CARD", JLabel.CENTER);
+        Font boldFont = new Font(label.getFont().getName(), Font.BOLD, label.getFont().getSize());
+        label.setFont(boldFont);
+        this.add( label,BorderLayout.CENTER);
 
     }
 }

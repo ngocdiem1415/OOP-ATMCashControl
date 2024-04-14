@@ -3,10 +3,10 @@ package view;
 import javax.swing.*;
 import java.awt.*;
 
-public abstract class AbstractPage extends JPanel {
-    public AbstractPage() {
+public abstract class AbstractPanel extends JPanel {
+    public AbstractPanel() {
         // TODO Auto-generated constructor stub
-        this.setBackground(Color.BLUE);
+        this.setBackground(Color.WHITE);
         this.setBounds(188, 102, 491, 347);
     }
 
