@@ -8,47 +8,45 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class HomePage extends JFrame implements Observer, ActionListener {
-    Login login;
+public class Login extends JFrame implements Observer, ActionListener {
     private Observer obs;
     private Controller controller;
     private ImageSetting image;
-    private JPasswordField passwordField, changePasswordField;
     private JTextField textSTK;
-    private JPanel monitor;
     private JButton[] arrSelection = new JButton[8];
     private JButton btnOk;
+     WelcomePage monitor;
 
-    public HomePage (Observer obs ,Controller control, ImageSetting image, Login login){
+    public Login(Observer obs, Controller control, ImageSetting image, Login login) {
         super("ATM");
         setLookAndFeel();
         this.obs = obs;
         this.controller = control;
-        this.image  = new ImageSetting();
-        this.login = login;
+        this.image = new ImageSetting();
 
         init(); // khoi tao
         update();
     }
 
-    public HomePage()  {
+    public Login() {
         super("ATM");
         setLookAndFeel();
         this.obs = obs;
         this.controller = controller;
-        this.image  = new ImageSetting();
-        this.login = login;
+        this.image = new ImageSetting();
 
-        passwordField = new JPasswordField();
-        changePasswordField = new JPasswordField();
+        textSTK = new JTextField(60);
+        monitor = new WelcomePage();
+        this.add(monitor);
 
         init(); // khoi tao
         update();
+
     }
 
     // main method
     public static void main(String[] args) {
-        HomePage myATM = new HomePage( );
+        Login myATM = new Login();
     }
 
     private void init() {
@@ -57,18 +55,16 @@ public class HomePage extends JFrame implements Observer, ActionListener {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
         setIconImage();
-//        getContentPane().setLayout(null);
+        setLookAndFeel();
 
 //        --------------------------------------
+        textSTK.setBounds(940, 270, 140, 30);
+        textSTK.setHorizontalAlignment(JPasswordField.CENTER);
+        this.add(textSTK);
 
-        passwordField.setBounds(900, 130, 200, 20);
-        passwordField.setHorizontalAlignment(JPasswordField.CENTER);
-        this.add(passwordField);
-
-        changePasswordField.setBounds(140, 130, 200, 20);
-        changePasswordField.setHorizontalAlignment(JPasswordField.CENTER);
-        this.add(changePasswordField);
-
+        btnOk = new JButton("OK");
+        btnOk.setBounds(975, 330, 70, 20);
+        this.add(btnOk);
 
         // setBounds for buttons and add they
         int n = arrSelection.length;
@@ -103,8 +99,8 @@ public class HomePage extends JFrame implements Observer, ActionListener {
         Image imageIcon = image.mainImage();
         Image image = imageIcon.getScaledInstance(1157, 759, Image.SCALE_SMOOTH);
         setIconImage(image);
-        JPanel contet;
-        setContentPane(contet = new JPanel() {
+        JPanel content;
+        setContentPane(content = new JPanel() {
 
             @Override
             protected void paintComponent(Graphics g) {
@@ -113,7 +109,7 @@ public class HomePage extends JFrame implements Observer, ActionListener {
                 g.drawImage(image, 0, -10, null);
             }
         });
-        contet.setLayout(null);
+        content.setLayout(null);
 
     }
 
