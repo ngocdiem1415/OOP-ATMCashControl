@@ -8,47 +8,58 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class HomePage extends JFrame implements Observer, ActionListener {
-    Login login;
+public class MainPage extends JFrame implements Observer, ActionListener {
+    private CardLayout card;
     private Observer obs;
     private Controller controller;
     private ImageSetting image;
-    private JPasswordField passwordField, changePasswordField;
+    private String currentPanel = "";
     private JTextField textSTK;
-    private JPanel monitor;
-    private JButton[] arrSelection = new JButton[8];
+    private JButton[] arrSelection;
     private JButton btnOk;
+    private JPanel monitor;
+    private AbstractPanel welcomePanel, pinRequestPanel, introducePanel, choosenPanel, withdrawPanel ;
 
-    public HomePage (Observer obs ,Controller control, ImageSetting image, Login login){
+    public MainPage(Observer obs, Controller control, ImageSetting image, MainPage login) {
         super("ATM");
         setLookAndFeel();
         this.obs = obs;
         this.controller = control;
-        this.image  = new ImageSetting();
-        this.login = login;
+        this.image = new ImageSetting();
 
         init(); // khoi tao
         update();
     }
 
-    public HomePage()  {
+    public MainPage() {
         super("ATM");
         setLookAndFeel();
         this.obs = obs;
         this.controller = controller;
-        this.image  = new ImageSetting();
-        this.login = login;
+        this.image = new ImageSetting();
 
-        passwordField = new JPasswordField();
-        changePasswordField = new JPasswordField();
+        welcomePanel = new WelcomePanel();
+        pinRequestPanel = new PinRequestPanel();
+        introducePanel = new IntroducePanel();
+        choosenPanel = new ChoosenPanel();
+        withdrawPanel = new WithdrawPanel();
+        card = new CardLayout();
+
+        textSTK = new JTextField(60);
+        btnOk = new JButton("OK");
+        monitor = new JPanel();
+        monitor.setLayout(card);
+        monitor.setBounds(188, 102, 491, 347);
 
         init(); // khoi tao
         update();
+        setVisible(true);
+
     }
 
     // main method
     public static void main(String[] args) {
-        HomePage myATM = new HomePage( );
+        MainPage myATM = new MainPage();
     }
 
     private void init() {
@@ -57,20 +68,26 @@ public class HomePage extends JFrame implements Observer, ActionListener {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
         setIconImage();
-//        getContentPane().setLayout(null);
+        setLookAndFeel();
+
+//        --------------
+//        monitor.add("WelcomePanel", welcomePanel);
+//        monitor.add("PinRequestPanel", pinRequestPanel);
+//        monitor.add("IntroducePanel", introducePanel);
+//        monitor.add("ChoosenPanel", choosenPanel);
+        add(monitor);
+//        show("WelcomePage");
 
 //        --------------------------------------
+        textSTK.setBounds(940, 270, 140, 30);
+        textSTK.setHorizontalAlignment(JPasswordField.CENTER);
+        this.add(textSTK);
 
-        passwordField.setBounds(900, 130, 200, 20);
-        passwordField.setHorizontalAlignment(JPasswordField.CENTER);
-        this.add(passwordField);
-
-        changePasswordField.setBounds(140, 130, 200, 20);
-        changePasswordField.setHorizontalAlignment(JPasswordField.CENTER);
-        this.add(changePasswordField);
-
+        btnOk.setBounds(975, 330, 65, 25);
+        this.add(btnOk);
 
         // setBounds for buttons and add they
+        arrSelection = new JButton[8];
         int n = arrSelection.length;
         for (int i = 0; i < n; i++) {
             arrSelection[i] = new JButton();
@@ -82,7 +99,7 @@ public class HomePage extends JFrame implements Observer, ActionListener {
             }
             this.add(arrSelection[i]);
         }
-        setVisible(true);
+
     }
 
     private void setLookAndFeel() {
@@ -103,9 +120,8 @@ public class HomePage extends JFrame implements Observer, ActionListener {
         Image imageIcon = image.mainImage();
         Image image = imageIcon.getScaledInstance(1157, 759, Image.SCALE_SMOOTH);
         setIconImage(image);
-        JPanel contet;
-        setContentPane(contet = new JPanel() {
-
+        JPanel content;
+        setContentPane(content = new JPanel() {
             @Override
             protected void paintComponent(Graphics g) {
                 // TODO Auto-generated method stub
@@ -113,7 +129,7 @@ public class HomePage extends JFrame implements Observer, ActionListener {
                 g.drawImage(image, 0, -10, null);
             }
         });
-        contet.setLayout(null);
+        content.setLayout(null);
 
     }
 
@@ -125,5 +141,21 @@ public class HomePage extends JFrame implements Observer, ActionListener {
     @Override
     public void update() {
 
+    }
+
+    public String getCurrentPage() {
+        return currentPanel;
+    }
+
+    public boolean isWelcomePanel() {
+        return getCurrentPage().equals("WelcomePanel") ? true : false;
+    }
+
+    public JTextField getTextSTK() {
+        return this.textSTK;
+    }
+
+    public void setTextSTK() {
+        this.textSTK = textSTK;
     }
 }
