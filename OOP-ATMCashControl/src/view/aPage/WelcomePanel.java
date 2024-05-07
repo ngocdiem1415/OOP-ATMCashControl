@@ -1,9 +1,7 @@
-package view;
+package view.aPage;
 
 import javax.swing.*;
 import java.awt.*;
-
-import static java.awt.Font.BOLD;
 
 public class WelcomePanel extends AbstractPanel {
     JLabel label;
