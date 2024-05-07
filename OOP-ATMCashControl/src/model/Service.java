@@ -1,2 +1,5 @@
-package model;public class Service {
+package model;
+
+public interface Service {
+
 }

@@ -1,6 +1,5 @@
 package view.aPage;
 
-import control.Controller;
 import view.HomePage;
 
 import javax.swing.*;
