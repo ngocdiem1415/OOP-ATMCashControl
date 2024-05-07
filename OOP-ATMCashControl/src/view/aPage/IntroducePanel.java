@@ -1,9 +1,9 @@
-package view;
+package view.aPage;
 
 import javax.swing.*;
 import java.awt.*;
 
-public class IntroducePanel extends AbstractPanel{
+public class IntroducePanel extends AbstractPanel {
     JLabel label1,label2, label3, label4, label5, continues;
 
     public IntroducePanel() {
@@ -32,7 +32,7 @@ public class IntroducePanel extends AbstractPanel{
         add(label5);
 
         continues = new JLabel("CONTINUES" , JLabel.RIGHT);
-        continues.setBounds(360, 262 + 52, 120, 22);
+        continues.setBounds(365, 202 + 120, 120, 22);
         Font boldFont2 = new Font(continues.getFont().getName(), Font.BOLD, continues.getFont().getSize());
         continues.setFont(boldFont2);
         add(continues);

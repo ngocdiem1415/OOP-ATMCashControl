@@ -1,8 +1,8 @@
-package view;
+package view.aPage;
 
 import javax.swing.*;
 
-class WithdrawPanel extends AbstractPanel {
+public class WithdrawPanel extends AbstractPanel {
     JLabel choosen0, choosen1, choosen2, choosen3, choosen4;
     public WithdrawPanel() {
         // TODO Auto-generated constructor stub

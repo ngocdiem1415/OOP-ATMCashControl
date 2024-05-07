@@ -1,9 +1,9 @@
-package view;
+package view.aPage;
 
 import javax.swing.*;
 import java.awt.*;
 
-class ChoosenPanel extends AbstractPanel {
+public class ChoosenPanel extends AbstractPanel {
     public ChoosenPanel() {
         setLayout( null);
         JLabel title = new JLabel("Please select a transaction ", JLabel.CENTER);
