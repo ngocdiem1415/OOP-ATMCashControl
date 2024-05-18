@@ -48,7 +48,7 @@ public class ChoosenPanel extends AbstractPanel {
         choosen6.setFont(boldFont6);
         add(choosen6);
 
-        JLabel choosen7 = new JLabel("CANCEL");
+        JLabel choosen7 = new JLabel("LOG OUT");
         choosen7.setBounds(370, 202 + 120, 120, 22);
         Font boldFont7 = new Font(choosen7.getFont().getName(), Font.BOLD, choosen7.getFont().getSize());
         choosen7.setFont(boldFont7);

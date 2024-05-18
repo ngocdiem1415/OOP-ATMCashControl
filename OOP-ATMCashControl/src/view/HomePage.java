@@ -8,21 +8,22 @@ import view.aPage.*;
 import javax.swing.*;
 import javax.swing.plaf.nimbus.NimbusLookAndFeel;
 import java.awt.*;
+import java.awt.event.ActionListener;
 
-public class HomePage extends JFrame implements Observer{
+public class HomePage extends JFrame implements Observer {
     public static CardLayout card;
-    private Login login;
+    public Login login;
     private Observable obs;
     private static Controller controller;
     private ImageSetting image;
-    private JTextField textCard;
+    public JTextField textCard;
     private static JButton[] arrSelection;
     public static Container monitor;
+    public ButtonListener btaction = new ButtonListener(this);
 
-    private String cardNo = "";
-    private String userName = "";
-
-    private AbstractPanel introducePanel, choosenPanel, withdrawPanel, checkBalancePanel, otherSevices;
+    public String cardNo = "";
+    public String userName = "";
+    public AbstractPanel introducePanel, choosenPanel, withdrawPanel, changePINPanel, checkBalancePanel, otherSevicesPanel, successPanel, exchangeCompletePanel;
 
     public HomePage(Observable obs, Controller control, Login login) {
         super("ATM");
@@ -37,8 +38,11 @@ public class HomePage extends JFrame implements Observer{
         introducePanel = new IntroducePanel();
         choosenPanel = new ChoosenPanel();
         checkBalancePanel = new CheckBalancePanel(this);
-        otherSevices = new OtherSevices();
+        otherSevicesPanel = new UpdataPanel();
+        changePINPanel = new ChangePINPanel(controller);
         withdrawPanel = new WithdrawPanel();
+        successPanel = new SuccessPanel();
+        exchangeCompletePanel = new ExchangeCompletePage();
         card = new CardLayout();
 
         textCard = new JTextField(60);
@@ -52,6 +56,11 @@ public class HomePage extends JFrame implements Observer{
 
     }
 
+    public static void visible(HomePage homePage) {
+        homePage.setVisible(false);
+        homePage.login.setVisible(true);
+    }
+
     private void init() {
         setSize(1157, 759);
         setResizable(false);
@@ -63,9 +72,11 @@ public class HomePage extends JFrame implements Observer{
         monitor.add("IntroducePanel", introducePanel);
         monitor.add("ChoosenPanel", choosenPanel);
         monitor.add("WithdrawPanel", withdrawPanel);
+        monitor.add("ChangePINPanel", changePINPanel);
         monitor.add("CheckBalancePanel", checkBalancePanel);
-        monitor.add("OtherSevicesPanel", otherSevices);
-//        monitor.add("OtherSevices", otherSevices);
+        monitor.add("OtherSevicesPanel", otherSevicesPanel);
+        monitor.add("SuccessPanel", successPanel);
+        monitor.add("ExchangeCompletePage", exchangeCompletePanel);
         add(monitor);
 
 //        --------------------------------------
@@ -91,25 +102,51 @@ public class HomePage extends JFrame implements Observer{
 
     //        --------------------------------------
 
-    public static void initButtonForMonitor0(){
-        arrSelection[7].addActionListener(new ButtonListener.showChoosen());
+    public void initButtonForMonitor0() {
+        arrSelection[7].addActionListener(btaction.showChoosen());
     }
 
-    private static void initButtonForMonitor1() {
-        arrSelection[0].addActionListener(new ButtonListener.showCheckBalance());
-//        arrSelection[1].addActionListener(new ButtonListener.showIntrucduce());
+    private void initButtonForMonitor1() {
+        arrSelection[0].addActionListener(btaction.showCheckBalance());
+        arrSelection[1].addActionListener(btaction.showWithDraw());
 //        arrSelection[2].addActionListener(new ButtonListener.showIntrucduce());
-//        arrSelection[4].addActionListener(new ButtonListener.showIntrucduce());
-//        arrSelection[5].addActionListener(new ButtonListener.showIntrucduce());
-        arrSelection[6].addActionListener(new ButtonListener.showOtherServices());
-        arrSelection[7].addActionListener(new ButtonListener.showIntrucduce());
+        arrSelection[4].addActionListener(btaction.showUpdataPanel());
+        arrSelection[5].addActionListener(btaction.showChangePIN());
+        arrSelection[6].addActionListener(btaction.showUpdataPanel());
+        arrSelection[7].addActionListener(btaction.logout());
     }
 
-    public static void initButtonForMonitor6() {
-        arrSelection[3].addActionListener(new ButtonListener.showChoosen());
 
+    public void initButtonForMonitor2() {
+        arrSelection[0].addActionListener(btaction.isWithdrawOneHundredThousand());
+        arrSelection[1].addActionListener(btaction.isWithdrawTwoHundredThousand());
+        arrSelection[2].addActionListener(btaction.isWithdrawThreeHundredThousand());
+        arrSelection[4].addActionListener(btaction.isWithdrawOneMillion());
+        arrSelection[5].addActionListener(btaction.isWithdrawTwoMillion());
+//        arrSelection[6].addActionListener();
+        arrSelection[7].addActionListener(btaction.showChoosen());
     }
 
+    private void initButtonForMonitor5() {
+        arrSelection[3].addActionListener(btaction.showChoosen());
+        arrSelection[7].addActionListener(btaction.checkChangePIN());
+    }
+
+    public void initButtonForMonitor6() {
+        arrSelection[3].addActionListener(btaction.showChoosen());
+    }
+
+    private void initButtonForMonitor7() {
+        arrSelection[7].addActionListener(btaction.logout());
+    }
+
+    public static void removeActionListeners() {
+        for (int i = 0; i < arrSelection.length; i++) {
+            for (ActionListener al : arrSelection[i].getActionListeners()) {
+                arrSelection[i].removeActionListener(al);
+            }
+        }
+    }
 
     private void setLookAndFeel() {
         try {
@@ -142,33 +179,94 @@ public class HomePage extends JFrame implements Observer{
 
     }
 
-    public static void showIntruducePanel() {
+    public void showIntruducePanel() {
         card.show(monitor, "IntroducePanel");
-        System.out.println("chay cancel");
         initButtonForMonitor0();
     }
 
-    public static void showChoosenPanel() {
+    public void showChoosenPanel() {
         card.show(monitor, "ChoosenPanel");
+        removeActionListeners();
         initButtonForMonitor1();
+    }
+
+    public void showWithDrawPanel() {
+        card.show(monitor, "WithdrawPanel");
+        System.out.println("show panel chuyen tien");
+        removeActionListeners();
+        initButtonForMonitor2();
+    }
+
+    public void showChangePIN() {
+        card.show(monitor, "ChangePINPanel");
+        System.out.println("show panel đoi ma PIN");
+        removeActionListeners();
+        initButtonForMonitor5();
     }
 
     public static void showMakeDepositsPanel() {
     }
 
-    public static void showOtherServicesPanel() {
+    public void showOtherServicesPanel() {
         card.show(monitor, "OtherSevicesPanel");
-        initButtonForMonitor6();
-    }
-    public static void showCheckBalancePanel() {
-        card.show(monitor, "CheckBalancePanel");
+        removeActionListeners();
         initButtonForMonitor6();
     }
 
-    public String checkBalance(){
+    public void showCheckBalancePanel() {
+        card.show(monitor, "CheckBalancePanel");
+        removeActionListeners();
+        initButtonForMonitor6();
+    }
+
+    public void showSuccessPanel() {
+        card.show(monitor, "SuccessPanel");
+        removeActionListeners();
+        initButtonForMonitor7();
+    }
+
+    public void showExchangeCompletePanel() {
+        card.show(monitor, "ExchangeCompletePage");
+        removeActionListeners();
+        initButtonForMonitor7();
+    }
+    public String checkBalance() {
         String balance = String.valueOf(controller.checkBalance());
         return balance;
     }
+
+
+    public String getCardNo() {
+        return controller.getCardNo();
+    }
+
+    public String getUserName() {
+        return controller.getName();
+    }
+
+    public static void isWithDraw(double i) {
+        if (!controller.checkWithdraw(i)) {
+            String html = "The amount of money in your account is not enough to make the transaction";
+            int w = 175;
+            JOptionPane.showMessageDialog(null, String.format(html, w, w));
+            JOptionPane.showMessageDialog(null, "The amount of money in your account is not enough to make the transaction",
+                    "Notification",
+                    JOptionPane.CLOSED_OPTION);
+        } else {
+            int output = JOptionPane.showConfirmDialog(null,
+                    "The amount of money in your account is not enough to make the transaction",
+                    "Notification",
+                    JOptionPane.YES_NO_OPTION);
+            if (output == JOptionPane.YES_OPTION) {
+                System.out.println("da rut duoc tien , chuyen sang panel khac");
+//                showSuccessPanel();
+                card.show(monitor, "SuccessPanel");
+            } else if (output == JOptionPane.NO_OPTION) {
+            }
+        }
+    }
+
+
     @Override
     public void update() {
         ManagerAccount manager = (ManagerAccount) obs;
@@ -178,5 +276,10 @@ public class HomePage extends JFrame implements Observer{
 
         System.out.println(cardNo + "update da duoc goi");
         textCard.setText(cardNo);
+    }
+
+
+    public void getData() {
+        controller.getData();
     }
 }

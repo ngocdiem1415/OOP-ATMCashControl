@@ -6,13 +6,15 @@ public abstract class AccountBank {
     protected String passWord;
     protected String firstName;
     protected String lastName;
+    protected double accountBalance;
 
-    public AccountBank(String id, String userName, String passWord, String firstName, String lastName) {
+    public AccountBank(String id, String userName, String passWord, String firstName, String lastName, double accountBalance) {
         this.id = id;
         this.userName = userName;
         this.passWord = passWord;
         this.firstName = firstName;
         this.lastName = lastName;
+        this.accountBalance = accountBalance;
     }
 
     public String getId() {
@@ -55,15 +57,26 @@ public abstract class AccountBank {
         this.lastName = lastName;
     }
 
+    public double getAccountBalance() {
+        return accountBalance;
+    }
+
+    public void setAccountBalance(double accountBalance) {
+        this.accountBalance = accountBalance;
+    }
+
     @Override
     public String toString() {
         String asw = "";
-        asw += "Account: " + userName;
+        asw += "Account: " + id + " " + userName;
         asw += "\n First name: " + firstName + "\tLast name: " + lastName;
+        asw += "\n pwd: " + passWord;
         return asw;
     }
 
-    public abstract double getBalance();
+    public double getBalance() {
+        return accountBalance;
+    }
 
 
 }

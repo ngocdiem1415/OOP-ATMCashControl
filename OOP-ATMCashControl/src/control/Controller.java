@@ -22,5 +22,26 @@ public class Controller {
     public double checkBalance(){
         return manager.isBalance();
     }
+
+    public String getCardNo() {
+        return manager.getCardNo();
+    }
+
+    public String getName() {
+        return manager.getUserName();
+    }
+
+    public boolean checkWithdraw(double i) {
+        return manager.checkWithdraw(i) ;
+    }
+
+    public boolean changePIN(String newPIN) {
+//        System.out.println( manager.changePIN(newPIN));
+        return manager.changePIN(newPIN);
+    }
+
+    public void getData() {
+        manager.data();
+    }
 }
 

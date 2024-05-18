@@ -130,7 +130,7 @@ public class Login extends JFrame {
 
     private void checkAccount() {
         if (controller.isAccount(txtUsername.getText(), txtPassword.getText())) {
-            setVisible(false);
+            this.setVisible(false);
 
             HomePage homePage = new HomePage(obs, controller, this);
             homePage.setVisible(true);
@@ -147,4 +147,11 @@ public class Login extends JFrame {
                     JOptionPane.ERROR_MESSAGE);
         }
     }
+
+    public void visible() {
+        this.txtPassword.setText("");
+        this.txtUsername.setText("");
+        this.setVisible(true);
+    }
+
 }

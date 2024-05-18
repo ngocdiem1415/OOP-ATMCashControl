@@ -25,18 +25,18 @@ public class ManagerAccount extends Observable {
         return success;
     }
 
-    public String getCardNo(){
+    public String getCardNo() {
         return account.getId();
     }
 
-    public String getUserName(){
+    public String getUserName() {
         return account.getUserName();
     }
 
     //is check card and PIN
-    public boolean verifyAccount(String PIN, String card){
+    public boolean verifyAccount(String PIN, String card) {
         for (AccountBank account : accounts) {
-            if ( account.getId().equals(card) && account.getPassWord().equals(PIN)) {
+            if (account.getId().equals(card) && account.getPassWord().equals(PIN)) {
                 this.account = account; // luu lai acc
                 System.out.println("notify");
                 notifyObs();
@@ -49,5 +49,34 @@ public class ManagerAccount extends Observable {
 
     public double isBalance() {
         return account.getBalance();
+    }
+
+    public boolean checkEnoughMoney(double i) {
+        return isBalance() > i;
+    }
+
+    public boolean checkWithdraw(double i) {
+        if (checkEnoughMoney(i)) {
+            account.setAccountBalance(account.getAccountBalance() - i);
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public boolean changePIN(String newPIN) {
+        this.account.setPassWord(newPIN);
+        for (AccountBank temp: accounts) {
+            if(temp.getId().equals(account.getId())){
+                temp.setPassWord(newPIN);
+                return true;
+            }
+        }
+        System.out.println("newPIN" + account.getPassWord());
+        return false;
+    }
+
+    public void data() {
+        System.out.println(accounts.toString());
     }
 }
