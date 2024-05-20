@@ -2,6 +2,7 @@ package view;
 
 import view.aPage.ChangePINPanel;
 import view.aPage.TransferDetailsPanel;
+import view.aPage.WithdrawPanel2;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -66,7 +67,7 @@ public class ButtonListener implements AuthButtonListener {
         return new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                homePage.showWithDrawPanel();
+                homePage.showWithDrawPanel1();
 
             }
         };
@@ -76,7 +77,7 @@ public class ButtonListener implements AuthButtonListener {
         return new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                homePage.showWithDrawPanel();
+                homePage.showWithDrawPanel1();
 
             }
         };
@@ -164,6 +165,7 @@ public class ButtonListener implements AuthButtonListener {
         return new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                TransferDetailsPanel.updataAccountToMakeDeposits(homePage, (TransferDetailsPanel) homePage.transferDetailsPanel);
                 homePage.showMakeDepositsPanel2();
             }
         };
@@ -176,6 +178,24 @@ public class ButtonListener implements AuthButtonListener {
                 if (TransferDetailsPanel.makeDeposit((TransferDetailsPanel) homePage.transferDetailsPanel)) {
                     homePage.showCompletePanel();
                 }
+            }
+        };
+    }
+
+    public ActionListener isWithdrawOther() {
+        return new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                homePage.showWithdrawPanel2();
+            }
+        };
+    }
+
+    public ActionListener isWithdrawAnyAmount() {
+        return new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                WithdrawPanel2.isWithdrawAnyAmount(homePage, (WithdrawPanel2) homePage.withdrawPanel2);
             }
         };
     }

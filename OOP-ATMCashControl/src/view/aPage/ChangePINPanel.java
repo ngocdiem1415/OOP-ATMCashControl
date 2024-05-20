@@ -7,8 +7,8 @@ import javax.swing.*;
 import java.awt.*;
 
 public class ChangePINPanel extends AbstractPanel {
-        JLabel lbtitle, lb2, lb3, lb4, back, enter;
-       public JPasswordField pf1, pf2, pf3;
+    JLabel lbtitle, lb2, lb3, lb4, back, enter;
+    public JPasswordField pf1, pf2, pf3;
     IController controller;
 
     public ChangePINPanel(IController controller) {
@@ -67,9 +67,9 @@ public class ChangePINPanel extends AbstractPanel {
     public static boolean checkSynchronizationNewPIN(ChangePINPanel changePINPanel) {
         String newpin = String.valueOf(changePINPanel.pf2.getPassword());
         String re_newPIN = String.valueOf(changePINPanel.pf3.getPassword());
-        if(  re_newPIN.equals(newpin)){
+        if (re_newPIN.equals(newpin)) {
             return changePINPanel.controller.changePIN(newpin);
-        }else {
+        } else {
             JOptionPane.showMessageDialog(null, "New PIN are not synchronized. Enter new PIN", "Error",
                     JOptionPane.ERROR_MESSAGE);
         }

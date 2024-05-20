@@ -23,7 +23,7 @@ public class HomePage extends JFrame implements Observer {
 
     public String cardNo = "";
     public String userName = "";
-    public AbstractPanel introducePanel, choosenPanel, withdrawPanel, makeDepositPanel,
+    public AbstractPanel introducePanel, choosenPanel, withdrawPanel1,withdrawPanel2 , makeDepositPanel,
             changePINPanel, checkBalancePanel, otherSevicesPanel, transferDetailsPanel, completePanel;
 
     public HomePage(Observable obs, IController control, Login login) {
@@ -41,9 +41,10 @@ public class HomePage extends JFrame implements Observer {
         checkBalancePanel = new CheckBalancePanel(this);
         otherSevicesPanel = new UpdataPanel();
         changePINPanel = new ChangePINPanel(controller);
-        withdrawPanel = new WithdrawPanel();
+        withdrawPanel1 = new WithdrawPanel1();
+        withdrawPanel2 = new WithdrawPanel2(controller, this);
         makeDepositPanel = new MakeDepositPanel();
-        transferDetailsPanel = new TransferDetailsPanel(controller);
+        transferDetailsPanel = new TransferDetailsPanel(controller, this);
         completePanel = new CompletePanel();
         card = new CardLayout();
 
@@ -73,7 +74,8 @@ public class HomePage extends JFrame implements Observer {
 ////        --------------
         monitor.add("IntroducePanel", introducePanel);
         monitor.add("ChoosenPanel", choosenPanel);
-        monitor.add("WithdrawPanel", withdrawPanel);
+        monitor.add("WithdrawPanel1", withdrawPanel1);
+        monitor.add("WithdrawPanel2", withdrawPanel2);
         monitor.add("ChangePINPanel", changePINPanel);
         monitor.add("CheckBalancePanel", checkBalancePanel);
         monitor.add("OtherSevicesPanel", otherSevicesPanel);
@@ -126,13 +128,13 @@ public class HomePage extends JFrame implements Observer {
         arrSelection[2].addActionListener(btaction.isWithdrawThreeHundredThousand());
         arrSelection[4].addActionListener(btaction.isWithdrawOneMillion());
         arrSelection[5].addActionListener(btaction.isWithdrawTwoMillion());
-//        arrSelection[6].addActionListener();
+        arrSelection[6].addActionListener(btaction.isWithdrawOther());
         arrSelection[7].addActionListener(btaction.showChoosen());
     }
 
     private void initButtonForMonitor3() {
         arrSelection[0].addActionListener(btaction.showTransferDetails());
-        arrSelection[4].addActionListener(btaction.showTransferDetails());
+        arrSelection[4].addActionListener(btaction.showUpdataPanel());
         arrSelection[3].addActionListener(btaction.showChoosen());
     }
     private void initButtonForMonitor5() {
@@ -153,6 +155,11 @@ public class HomePage extends JFrame implements Observer {
     private void initButtonForMonitor8() {
         arrSelection[3].addActionListener(btaction.showChoosen());
         arrSelection[7].addActionListener(btaction.makeDeposit());
+    }
+
+    private void initButtonForMonitor9() {
+        arrSelection[3].addActionListener(btaction.showChoosen());
+        arrSelection[7].addActionListener(btaction.isWithdrawAnyAmount());
     }
 
     public static void removeActionListeners() {
@@ -205,11 +212,18 @@ public class HomePage extends JFrame implements Observer {
         initButtonForMonitor1();
     }
 
-    public void showWithDrawPanel() {
-        card.show(monitor, "WithdrawPanel");
+    public void showWithDrawPanel1() {
+        card.show(monitor, "WithdrawPanel1");
         System.out.println("show panel chuyen tien");
         removeActionListeners();
         initButtonForMonitor2();
+    }
+
+    public void showWithdrawPanel2() {
+        card.show(monitor, "WithdrawPanel2");
+        System.out.println("show panel chuyen tien");
+        removeActionListeners();
+        initButtonForMonitor9();
     }
 
     public void showChangePIN() {
@@ -269,10 +283,10 @@ public class HomePage extends JFrame implements Observer {
         return controller.getName();
     }
 
-    public static void isWithDraw(double i) {
+    public void isWithDraw(double i) {
         if (controller.isWithDraw(i)) {
-            card.show(monitor, "SuccessPanel");
             System.out.println("da rut duoc tien , chuyen sang panel khac");
+            showCompletePanel();
         } else {
             String html = "The amount of money in your account is not enough to make the transaction";
             int w = 175;
@@ -296,4 +310,5 @@ public class HomePage extends JFrame implements Observer {
     public void getData() {
         controller.getData();
     }
+
 }

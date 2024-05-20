@@ -1,6 +1,7 @@
 package view.aPage;
 
 import control.IController;
+import view.HomePage;
 
 import javax.swing.*;
 import java.awt.*;
@@ -9,9 +10,11 @@ public class TransferDetailsPanel extends AbstractPanel {
     JLabel lb1, lb2, lb3, lb4, enter, cancel;
     JTextField tf1, tf2;
     IController controller;
+    HomePage homePage;
 
-    public TransferDetailsPanel(IController controller) {
+    public TransferDetailsPanel(IController controller,  HomePage homePage) {
         this.controller = controller;
+        this.homePage = homePage;
         setLayout(null);
 
         lb1 = new JLabel("Transfer Account: ");
@@ -56,6 +59,11 @@ public class TransferDetailsPanel extends AbstractPanel {
         add(enter);
     }
 
+    public static void updataAccountToMakeDeposits(HomePage homePage, TransferDetailsPanel transferDetailsPanel) {
+        String card = homePage.getCardNo();
+        transferDetailsPanel.lb2.setText(card);
+    }
+
     public static boolean makeDeposit(TransferDetailsPanel transferDetailsPanel) {
         String card = transferDetailsPanel.tf1.getText();
         Double money = Double.valueOf(transferDetailsPanel.tf2.getText());
@@ -67,8 +75,14 @@ public class TransferDetailsPanel extends AbstractPanel {
             transferDetailsPanel.tf1.setText("");
             transferDetailsPanel.tf2.setText("");
         } else if (transferDetailsPanel.controller.isCardAvailable(card)) {
+            if ( !transferDetailsPanel.controller.checkEnoughMoney(money)) {
+                JOptionPane.showMessageDialog(null, "The account doesn't have enough money", "Error",
+                        JOptionPane.ERROR_MESSAGE);
+                transferDetailsPanel.tf2.setText("");
+            } else {
 //            System.out.println("tai khaon dich " +card);
-            return transferDetailsPanel.controller.isDeductAmount(card, money);
+                return transferDetailsPanel.controller.isDeductAmount(card, money);
+            }
         } else {
             JOptionPane.showMessageDialog(null, "Card does not exist", "Error",
                     JOptionPane.ERROR_MESSAGE);

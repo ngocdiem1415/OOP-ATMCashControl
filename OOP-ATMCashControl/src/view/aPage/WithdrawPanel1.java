@@ -3,9 +3,9 @@ package view.aPage;
 import javax.swing.*;
 import java.awt.*;
 
-public class WithdrawPanel extends AbstractPanel {
+public class WithdrawPanel1 extends AbstractPanel {
     JLabel choosen0, choosen1, choosen2, choosen3, choosen4;
-    public WithdrawPanel() {
+    public WithdrawPanel1() {
         setLayout(null);
         Font boldFont = new Font(null, Font.BOLD, 12);
 
