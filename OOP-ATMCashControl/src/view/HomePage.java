@@ -1,6 +1,6 @@
 package view;
 
-import control.Controller;
+import control.IController;
 import model.ManagerAccount;
 import model.Observable;
 import view.aPage.*;
@@ -14,7 +14,7 @@ public class HomePage extends JFrame implements Observer {
     public static CardLayout card;
     public Login login;
     private Observable obs;
-    private static Controller controller;
+    private static IController controller;
     private ImageSetting image;
     public JTextField textCard;
     private static JButton[] arrSelection;
@@ -23,9 +23,10 @@ public class HomePage extends JFrame implements Observer {
 
     public String cardNo = "";
     public String userName = "";
-    public AbstractPanel introducePanel, choosenPanel, withdrawPanel, changePINPanel, checkBalancePanel, otherSevicesPanel, successPanel, exchangeCompletePanel;
+    public AbstractPanel introducePanel, choosenPanel, withdrawPanel, makeDepositPanel,
+            changePINPanel, checkBalancePanel, otherSevicesPanel, transferDetailsPanel, completePanel;
 
-    public HomePage(Observable obs, Controller control, Login login) {
+    public HomePage(Observable obs, IController control, Login login) {
         super("ATM");
         setLookAndFeel();
         this.obs = obs;
@@ -41,8 +42,9 @@ public class HomePage extends JFrame implements Observer {
         otherSevicesPanel = new UpdataPanel();
         changePINPanel = new ChangePINPanel(controller);
         withdrawPanel = new WithdrawPanel();
-        successPanel = new SuccessPanel();
-        exchangeCompletePanel = new ExchangeCompletePage();
+        makeDepositPanel = new MakeDepositPanel();
+        transferDetailsPanel = new TransferDetailsPanel(controller);
+        completePanel = new CompletePanel();
         card = new CardLayout();
 
         textCard = new JTextField(60);
@@ -75,8 +77,9 @@ public class HomePage extends JFrame implements Observer {
         monitor.add("ChangePINPanel", changePINPanel);
         monitor.add("CheckBalancePanel", checkBalancePanel);
         monitor.add("OtherSevicesPanel", otherSevicesPanel);
-        monitor.add("SuccessPanel", successPanel);
-        monitor.add("ExchangeCompletePage", exchangeCompletePanel);
+        monitor.add("TransferDetailsPanel", transferDetailsPanel);
+        monitor.add("MakeDepositPanel", makeDepositPanel);
+        monitor.add("CompletePage", completePanel);
         add(monitor);
 
 //        --------------------------------------
@@ -109,7 +112,7 @@ public class HomePage extends JFrame implements Observer {
     private void initButtonForMonitor1() {
         arrSelection[0].addActionListener(btaction.showCheckBalance());
         arrSelection[1].addActionListener(btaction.showWithDraw());
-//        arrSelection[2].addActionListener(new ButtonListener.showIntrucduce());
+        arrSelection[2].addActionListener(btaction.showMakeDepositPanel());
         arrSelection[4].addActionListener(btaction.showUpdataPanel());
         arrSelection[5].addActionListener(btaction.showChangePIN());
         arrSelection[6].addActionListener(btaction.showUpdataPanel());
@@ -127,6 +130,11 @@ public class HomePage extends JFrame implements Observer {
         arrSelection[7].addActionListener(btaction.showChoosen());
     }
 
+    private void initButtonForMonitor3() {
+        arrSelection[0].addActionListener(btaction.showTransferDetails());
+        arrSelection[4].addActionListener(btaction.showTransferDetails());
+        arrSelection[3].addActionListener(btaction.showChoosen());
+    }
     private void initButtonForMonitor5() {
         arrSelection[3].addActionListener(btaction.showChoosen());
         arrSelection[7].addActionListener(btaction.checkChangePIN());
@@ -136,8 +144,15 @@ public class HomePage extends JFrame implements Observer {
         arrSelection[3].addActionListener(btaction.showChoosen());
     }
 
+
     private void initButtonForMonitor7() {
         arrSelection[7].addActionListener(btaction.logout());
+    }
+
+
+    private void initButtonForMonitor8() {
+        arrSelection[3].addActionListener(btaction.showChoosen());
+        arrSelection[7].addActionListener(btaction.makeDeposit());
     }
 
     public static void removeActionListeners() {
@@ -204,7 +219,16 @@ public class HomePage extends JFrame implements Observer {
         initButtonForMonitor5();
     }
 
-    public static void showMakeDepositsPanel() {
+    public void showMakeDepositsPanel1() {
+        card.show(monitor, "MakeDepositPanel");
+        removeActionListeners();
+        initButtonForMonitor3();
+    }
+
+    public void showMakeDepositsPanel2() {
+        card.show(monitor, "TransferDetailsPanel");
+        removeActionListeners();
+        initButtonForMonitor8();
     }
 
     public void showOtherServicesPanel() {
@@ -225,11 +249,12 @@ public class HomePage extends JFrame implements Observer {
         initButtonForMonitor7();
     }
 
-    public void showExchangeCompletePanel() {
-        card.show(monitor, "ExchangeCompletePage");
+    public void showCompletePanel() {
+        card.show(monitor, "CompletePage");
         removeActionListeners();
         initButtonForMonitor7();
     }
+
     public String checkBalance() {
         String balance = String.valueOf(controller.checkBalance());
         return balance;
@@ -245,24 +270,13 @@ public class HomePage extends JFrame implements Observer {
     }
 
     public static void isWithDraw(double i) {
-        if (!controller.checkWithdraw(i)) {
+        if (controller.isWithDraw(i)) {
+            card.show(monitor, "SuccessPanel");
+            System.out.println("da rut duoc tien , chuyen sang panel khac");
+        } else {
             String html = "The amount of money in your account is not enough to make the transaction";
             int w = 175;
             JOptionPane.showMessageDialog(null, String.format(html, w, w));
-            JOptionPane.showMessageDialog(null, "The amount of money in your account is not enough to make the transaction",
-                    "Notification",
-                    JOptionPane.CLOSED_OPTION);
-        } else {
-            int output = JOptionPane.showConfirmDialog(null,
-                    "The amount of money in your account is not enough to make the transaction",
-                    "Notification",
-                    JOptionPane.YES_NO_OPTION);
-            if (output == JOptionPane.YES_OPTION) {
-                System.out.println("da rut duoc tien , chuyen sang panel khac");
-//                showSuccessPanel();
-                card.show(monitor, "SuccessPanel");
-            } else if (output == JOptionPane.NO_OPTION) {
-            }
         }
     }
 

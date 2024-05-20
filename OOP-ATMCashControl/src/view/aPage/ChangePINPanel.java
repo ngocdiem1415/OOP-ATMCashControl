@@ -1,6 +1,7 @@
 package view.aPage;
 
 import control.Controller;
+import control.IController;
 
 import javax.swing.*;
 import java.awt.*;
@@ -8,9 +9,9 @@ import java.awt.*;
 public class ChangePINPanel extends AbstractPanel {
         JLabel lbtitle, lb2, lb3, lb4, back, enter;
        public JPasswordField pf1, pf2, pf3;
-       Controller controller;
+    IController controller;
 
-    public ChangePINPanel(Controller controller) {
+    public ChangePINPanel(IController controller) {
         this.controller = controller;
         setLayout(null);
 

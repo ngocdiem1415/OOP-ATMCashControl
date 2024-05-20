@@ -1,13 +1,13 @@
 package view;
 
 import view.aPage.ChangePINPanel;
+import view.aPage.TransferDetailsPanel;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class ButtonListener {
+public class ButtonListener implements AuthButtonListener {
     HomePage homePage;
-
     public ButtonListener(HomePage homePage) {
         this.homePage = homePage;
     }
@@ -16,8 +16,8 @@ public class ButtonListener {
         return new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                homePage.setVisible(false);
-                homePage.login.visible();
+                    homePage.setVisible(false);
+                    homePage.login.visible();
 //                homePage.getData();
             }
         };
@@ -145,8 +145,37 @@ public class ButtonListener {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (ChangePINPanel.checkSynchronizationNewPIN((ChangePINPanel) homePage.changePINPanel)){
-                    homePage.showExchangeCompletePanel();
+                    homePage.showCompletePanel();
                 };
+            }
+        };
+    }
+
+    public ActionListener showMakeDepositPanel() {
+        return new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                homePage.showMakeDepositsPanel1();
+            }
+        };
+    }
+
+    public ActionListener showTransferDetails() {
+        return new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                homePage.showMakeDepositsPanel2();
+            }
+        };
+    }
+
+    public ActionListener makeDeposit() {
+        return new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (TransferDetailsPanel.makeDeposit((TransferDetailsPanel) homePage.transferDetailsPanel)) {
+                    homePage.showCompletePanel();
+                }
             }
         };
     }

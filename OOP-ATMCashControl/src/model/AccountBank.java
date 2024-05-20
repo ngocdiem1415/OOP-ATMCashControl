@@ -70,7 +70,6 @@ public abstract class AccountBank {
         String asw = "";
         asw += "Account: " + id + " " + userName;
         asw += "\n First name: " + firstName + "\tLast name: " + lastName;
-        asw += "\n pwd: " + passWord;
         return asw;
     }
 

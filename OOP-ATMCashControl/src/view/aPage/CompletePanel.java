@@ -3,12 +3,12 @@ package view.aPage;
 import javax.swing.*;
 import java.awt.*;
 
-public class ExchangeCompletePage extends AbstractPanel{
+public class CompletePanel extends AbstractPanel{
     JLabel complete, choosen7;
-    public ExchangeCompletePage() {
+    public CompletePanel() {
         setLayout(null);
 
-       complete = new JLabel("EXCHANGE COMPLETED!", JLabel.CENTER);
+       complete = new JLabel("COMPLETED!", JLabel.CENTER);
         complete.setBounds((int) (getSize().getWidth() / 2) - 100, getSize().height / 2, 200, 22);
         Font boldFont7 = new Font(complete.getFont().getName(), Font.BOLD, complete.getFont().getSize());
         complete.setFont(boldFont7);
