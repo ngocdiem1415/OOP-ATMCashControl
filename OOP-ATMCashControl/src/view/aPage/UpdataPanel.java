@@ -3,9 +3,9 @@ package view.aPage;
 import javax.swing.*;
 import java.awt.*;
 
-public class OtherSevices extends AbstractPanel{
+public class UpdataPanel extends AbstractPanel{
     JLabel lb, back;
-    public OtherSevices() {
+    public UpdataPanel() {
         setLayout(null);
 
         lb = new JLabel("UPDATING ...", JLabel.CENTER);

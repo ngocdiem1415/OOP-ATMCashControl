@@ -1,6 +1,7 @@
 package view;
 
 import control.Controller;
+import control.IController;
 import model.Observable;
 
 import javax.swing.*;
@@ -14,13 +15,13 @@ import java.awt.event.MouseEvent;
 public class Login extends JFrame {
     private ImageSetting image;
     private Observable obs;
-    private Controller controller;
+    private IController controller;
     private JTextField txtUsername;
     private JPasswordField txtPassword;
     private JLabel lbtitle, lbCard, lbPassword;
     private JButton btnLogin;
 
-    public Login(Observable obs, Controller controller) {
+    public Login(Observable obs, IController controller) {
         this.obs = obs;
         this.controller = controller;
         this.image = new ImageSetting();
@@ -130,7 +131,7 @@ public class Login extends JFrame {
 
     private void checkAccount() {
         if (controller.isAccount(txtUsername.getText(), txtPassword.getText())) {
-            setVisible(false);
+            this.setVisible(false);
 
             HomePage homePage = new HomePage(obs, controller, this);
             homePage.setVisible(true);
@@ -147,4 +148,11 @@ public class Login extends JFrame {
                     JOptionPane.ERROR_MESSAGE);
         }
     }
+
+    public void visible() {
+        this.txtPassword.setText("");
+        this.txtUsername.setText("");
+        this.setVisible(true);
+    }
+
 }
