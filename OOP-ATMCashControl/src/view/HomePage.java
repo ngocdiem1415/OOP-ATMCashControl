@@ -1,7 +1,7 @@
 package view;
 
 import control.IController;
-import model.ManagerAccount;
+import model.ManagerCard;
 import model.Observable;
 import view.aPage.*;
 
@@ -14,7 +14,7 @@ public class HomePage extends JFrame implements Observer {
     public static CardLayout card;
     public Login login;
     private Observable obs;
-    private static IController controller;
+    private IController controller;
     private ImageSetting image;
     public JTextField textCard;
     private static JButton[] arrSelection;
@@ -23,7 +23,7 @@ public class HomePage extends JFrame implements Observer {
 
     public String cardNo = "";
     public String userName = "";
-    public AbstractPanel introducePanel, choosenPanel, withdrawPanel1,withdrawPanel2 , makeDepositPanel,
+    public AbstractPanel introducePanel, choosenPanel,withdrawPanel0, withdrawPanel1,withdrawPanel2 , makeDepositPanel,
             changePINPanel, checkBalancePanel, otherSevicesPanel, transferDetailsPanel, completePanel;
 
     public HomePage(Observable obs, IController control, Login login) {
@@ -41,6 +41,7 @@ public class HomePage extends JFrame implements Observer {
         checkBalancePanel = new CheckBalancePanel(this);
         otherSevicesPanel = new UpdataPanel();
         changePINPanel = new ChangePINPanel(controller);
+        withdrawPanel0 = new WithdrawPanel0();
         withdrawPanel1 = new WithdrawPanel1();
         withdrawPanel2 = new WithdrawPanel2(controller, this);
         makeDepositPanel = new MakeDepositPanel();
@@ -74,6 +75,7 @@ public class HomePage extends JFrame implements Observer {
 ////        --------------
         monitor.add("IntroducePanel", introducePanel);
         monitor.add("ChoosenPanel", choosenPanel);
+        monitor.add("WithdrawPanel0", withdrawPanel0);
         monitor.add("WithdrawPanel1", withdrawPanel1);
         monitor.add("WithdrawPanel2", withdrawPanel2);
         monitor.add("ChangePINPanel", changePINPanel);
@@ -113,7 +115,7 @@ public class HomePage extends JFrame implements Observer {
 
     private void initButtonForMonitor1() {
         arrSelection[0].addActionListener(btaction.showCheckBalance());
-        arrSelection[1].addActionListener(btaction.showWithDraw());
+        arrSelection[1].addActionListener(btaction.showWithDraw0());
         arrSelection[2].addActionListener(btaction.showMakeDepositPanel());
         arrSelection[4].addActionListener(btaction.showUpdataPanel());
         arrSelection[5].addActionListener(btaction.showChangePIN());
@@ -140,6 +142,11 @@ public class HomePage extends JFrame implements Observer {
     private void initButtonForMonitor5() {
         arrSelection[3].addActionListener(btaction.showChoosen());
         arrSelection[7].addActionListener(btaction.checkChangePIN());
+    }
+
+    private void initButtonForMonitor10() {
+        arrSelection[0].addActionListener(btaction.getCommand());
+        arrSelection[4].addActionListener(btaction.getCommand());
     }
 
     public void initButtonForMonitor6() {
@@ -212,16 +219,23 @@ public class HomePage extends JFrame implements Observer {
         initButtonForMonitor1();
     }
 
+    public void showWithDrawPanel0() {
+        card.show(monitor, "WithdrawPanel0");
+        System.out.println("show panel chuyen tien0");
+        removeActionListeners();
+        initButtonForMonitor10();
+    }
+
     public void showWithDrawPanel1() {
         card.show(monitor, "WithdrawPanel1");
-        System.out.println("show panel chuyen tien");
+        System.out.println("show panel chuyen tien1");
         removeActionListeners();
         initButtonForMonitor2();
     }
 
     public void showWithdrawPanel2() {
         card.show(monitor, "WithdrawPanel2");
-        System.out.println("show panel chuyen tien");
+        System.out.println("show panel chuyen tien2");
         removeActionListeners();
         initButtonForMonitor9();
     }
@@ -257,11 +271,6 @@ public class HomePage extends JFrame implements Observer {
         initButtonForMonitor6();
     }
 
-    public void showSuccessPanel() {
-        card.show(monitor, "SuccessPanel");
-        removeActionListeners();
-        initButtonForMonitor7();
-    }
 
     public void showCompletePanel() {
         card.show(monitor, "CompletePage");
@@ -283,8 +292,8 @@ public class HomePage extends JFrame implements Observer {
         return controller.getName();
     }
 
-    public void isWithDraw(double i) {
-        if (controller.isWithDraw(i)) {
+    public void isWithDraw(double i,int typeCard) {
+        if (controller.isWithDraw(i,typeCard)) {
             System.out.println("da rut duoc tien , chuyen sang panel khac");
             showCompletePanel();
         } else {
@@ -297,7 +306,7 @@ public class HomePage extends JFrame implements Observer {
 
     @Override
     public void update() {
-        ManagerAccount manager = (ManagerAccount) obs;
+        ManagerCard manager = (ManagerCard) obs;
 
         this.cardNo = manager.getCardNo();
         this.userName = manager.getUserName();
@@ -311,4 +320,8 @@ public class HomePage extends JFrame implements Observer {
         controller.getData();
     }
 
+    public void visible(){
+        controller.logout();
+        this.setVisible(false);
+    }
 }

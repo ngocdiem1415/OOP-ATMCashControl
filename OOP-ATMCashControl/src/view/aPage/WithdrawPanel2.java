@@ -39,9 +39,9 @@ public class WithdrawPanel2 extends AbstractPanel{
         add(enter);
     }
 
-    public static void isWithdrawAnyAmount(HomePage homePage, WithdrawPanel2 withdrawPanel2) {
+    public static void isWithdrawAnyAmount(HomePage homePage, WithdrawPanel2 withdrawPanel2, int typeCard) {
         double money = Double.parseDouble(withdrawPanel2.tf1.getText());
         System.out.println(money);
-        homePage.isWithDraw(money);
+        homePage.isWithDraw(money,typeCard);
     }
 }

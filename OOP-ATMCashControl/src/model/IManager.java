@@ -2,9 +2,9 @@ package model;
 
 public interface IManager {
     public boolean isCardAvailable(String card);
-    public boolean add(AccountBank account);
+    public boolean add(Card account);
 
-    public boolean remove(AccountBank account);
+    public boolean remove(Card account);
 
     public String getCardNo();
 
@@ -22,6 +22,8 @@ public interface IManager {
 
     public void data();
 
-    boolean isWithDraw(double i);
+    boolean isWithDraw(double i, int typeCard);
+
+    void logout();
 }
 

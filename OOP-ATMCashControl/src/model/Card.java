@@ -1,6 +1,9 @@
 package model;
 
-public abstract class AccountBank {
+import model.strategy.TransferFees;
+import model.strategy.WithdrawalFees;
+
+public abstract class Card {
     protected String id;
     protected String userName;
     protected String passWord;
@@ -8,7 +11,14 @@ public abstract class AccountBank {
     protected String lastName;
     protected double accountBalance;
 
-    public AccountBank(String id, String userName, String passWord, String firstName, String lastName, double accountBalance) {
+    // lam viec voi interface
+    protected TransferFees transferFees;
+    protected WithdrawalFees withdrawalFees;
+
+    public Card() {
+    }
+
+    public Card(String id, String userName, String passWord, String firstName, String lastName, double accountBalance) {
         this.id = id;
         this.userName = userName;
         this.passWord = passWord;
@@ -77,5 +87,13 @@ public abstract class AccountBank {
         return accountBalance;
     }
 
+    public double transferFees(){
+        return transferFees.transfer_Fees();
+    }
 
+    public double withdrawalFees(){
+        return withdrawalFees.withdrawal_Fees();
+    }
+
+    public abstract double isWithDraw(double i, int typeCard);
 }

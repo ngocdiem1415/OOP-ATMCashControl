@@ -7,18 +7,21 @@ import view.aPage.WithdrawPanel2;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class ButtonListener implements AuthButtonListener {
+public class ButtonListener {
     HomePage homePage;
+    int typeCard;
     public ButtonListener(HomePage homePage) {
         this.homePage = homePage;
+        this.typeCard = -1;
     }
 
     public ActionListener logout() {
         return new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                    homePage.setVisible(false);
+                    homePage.visible();
                     homePage.login.visible();
+                    typeCard = -1;
 //                homePage.getData();
             }
         };
@@ -63,7 +66,17 @@ public class ButtonListener implements AuthButtonListener {
         };
     }
 
-    public ActionListener showWithDraw() {
+    public ActionListener showWithDraw0() {
+        return new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                homePage.showWithDrawPanel0();
+
+            }
+        };
+    }
+
+    public ActionListener showWithDraw1() {
         return new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -87,7 +100,7 @@ public class ButtonListener implements AuthButtonListener {
         return new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                homePage.isWithDraw(100000);
+                homePage.isWithDraw(100000,typeCard);
 
             }
         };
@@ -97,7 +110,7 @@ public class ButtonListener implements AuthButtonListener {
         return new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                homePage.isWithDraw(200000);
+                homePage.isWithDraw(200000,typeCard);
 
             }
         };
@@ -107,7 +120,7 @@ public class ButtonListener implements AuthButtonListener {
         return new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                homePage.isWithDraw(300000);
+                homePage.isWithDraw(300000,typeCard);
             }
         };
     }
@@ -116,7 +129,7 @@ public class ButtonListener implements AuthButtonListener {
         return new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                homePage.isWithDraw(1000000);
+                homePage.isWithDraw(1000000,typeCard);
 
             }
         };
@@ -126,7 +139,7 @@ public class ButtonListener implements AuthButtonListener {
         return new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                homePage.isWithDraw(1000000);
+                homePage.isWithDraw(1000000,typeCard);
 
             }
         };
@@ -195,7 +208,18 @@ public class ButtonListener implements AuthButtonListener {
         return new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                WithdrawPanel2.isWithdrawAnyAmount(homePage, (WithdrawPanel2) homePage.withdrawPanel2);
+                WithdrawPanel2.isWithdrawAnyAmount(homePage, (WithdrawPanel2) homePage.withdrawPanel2,typeCard);
+            }
+        };
+    }
+
+    public ActionListener getCommand() {
+        return new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                homePage.showWithDrawPanel1();
+//                typeCard = Integer.parseInt(e.getActionCommand());
+                System.out.println(typeCard);
             }
         };
     }

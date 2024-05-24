@@ -3,23 +3,23 @@ package model;
 import java.util.HashSet;
 import java.util.Set;
 
-public class ManagerAccount extends Observable implements IManager {
-    private static Set<AccountBank> accounts = new HashSet<AccountBank>();
-    private AccountBank account;
+public class ManagerCard extends Observable implements IManager {
+    private static Set<Card> accounts = new HashSet<Card>();
+    private Card account;
 
-    public ManagerAccount() {
+    public ManagerCard() {
         FactoryAttribute attribute = new FactoryAttribute();
     }
 
     //add Account
-    public boolean add(AccountBank account) {
+    public boolean add(Card account) {
         boolean success = accounts.add(account);
         notifyObs();
         return success;
     }
 
     // delete Account
-    public boolean remove(AccountBank account) {
+    public boolean remove(Card account) {
         boolean success = accounts.remove(account);
         notifyObs();
         return success;
@@ -35,10 +35,10 @@ public class ManagerAccount extends Observable implements IManager {
 
     //is check card and PIN
     public boolean verifyAccount(String card, String PIN) {
-        for (AccountBank account : accounts) {
+        for (Card account : accounts) {
             if (account.getId().equals(card) && account.getPassWord().equals(PIN)) {
                 this.account = account; // luu lai acc
-                System.out.println("notify");
+//                System.out.println("notify");
                 notifyObs();
                 return true;
             }
@@ -67,8 +67,8 @@ public class ManagerAccount extends Observable implements IManager {
     }
 
     public void makeDeposit(String recipientCard, double i) {
-        AccountBank recipientAccount = null;
-        for (AccountBank temp : accounts) {
+        Card recipientAccount = null;
+        for (Card temp : accounts) {
             if (temp.getId().equals(recipientCard)) {
                 recipientAccount = temp;
                 recipientAccount.setAccountBalance(recipientAccount.getAccountBalance() + 1);
@@ -79,7 +79,7 @@ public class ManagerAccount extends Observable implements IManager {
 
     public boolean changePIN(String newPIN) {
         this.account.setPassWord(newPIN);
-        for (AccountBank temp : accounts) {
+        for (Card temp : accounts) {
             if (temp.getId().equals(account.getId())) {
                 temp.setPassWord(newPIN);
                 return true;
@@ -94,17 +94,23 @@ public class ManagerAccount extends Observable implements IManager {
     }
 
     @Override
-    public boolean isWithDraw(double i) {
+    public boolean isWithDraw(double i,int typeCard) {
         if (checkEnoughMoney(i)) {
-            account.setAccountBalance(account.getAccountBalance() - i);
+//            account.setAccountBalance(account.getAccountBalance() - i);
+            account.setAccountBalance(account.isWithDraw(i,typeCard));
             return true;
         }else{
             return false;
         }
     }
 
+    @Override
+    public void logout() {
+        account = null;
+    }
+
     public boolean isCardAvailable(String card) {
-        for (AccountBank temp : accounts) {
+        for (Card temp : accounts) {
             if (temp.getId().equals(card)) {
                 System.out.println("hien trang tai khoan: " + temp.toString());
                 return true;

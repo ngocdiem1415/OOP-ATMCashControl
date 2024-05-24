@@ -17,5 +17,7 @@ public interface IController {
 
     public void getData();
 
-    boolean isWithDraw(double i);
+    boolean isWithDraw(double i,int typeCard);
+
+    void logout();
 }

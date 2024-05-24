@@ -55,6 +55,7 @@ public class Login extends JFrame {
         pnlMain.add(lblIconUser);
 
         txtUsername = new JTextField();
+        txtUsername.setText("22130038");
         txtUsername.setFont(new Font("Times New Roman", Font.PLAIN, 22));
         txtUsername.setHorizontalAlignment(SwingConstants.LEFT);
         txtUsername.setColumns(8);
@@ -68,6 +69,7 @@ public class Login extends JFrame {
         pnlMain.add(lbCard);
 
         txtPassword = new JPasswordField();
+        txtPassword.setText("22130038");
         txtPassword.setFont(new Font("Times New Roman", Font.PLAIN, 22));
         txtPassword.setHorizontalAlignment(SwingConstants.LEFT);
         txtPassword.setColumns(8);
@@ -150,8 +152,8 @@ public class Login extends JFrame {
     }
 
     public void visible() {
-        this.txtPassword.setText("");
-        this.txtUsername.setText("");
+//        this.txtPassword.setText("");
+//        this.txtUsername.setText("");
         this.setVisible(true);
     }
 

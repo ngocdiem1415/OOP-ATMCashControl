@@ -56,8 +56,13 @@ public class Controller implements IController{
     }
 
     @Override
-    public boolean isWithDraw(double i) {
-        return manager.isWithDraw(i);
+    public boolean isWithDraw(double i,int typeCard) {
+        return manager.isWithDraw(i,typeCard);
+    }
+
+    @Override
+    public void logout() {
+        manager.logout();
     }
 }
 
