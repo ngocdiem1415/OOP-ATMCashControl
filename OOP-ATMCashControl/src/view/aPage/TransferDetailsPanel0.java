@@ -3,10 +3,10 @@ package view.aPage;
 import javax.swing.*;
 import java.awt.*;
 
-public class MakeDepositPanel extends AbstractPanel{
+public class TransferDetailsPanel0 extends AbstractPanel{
     JLabel lb1, lb2, back;
 
-    public MakeDepositPanel() {
+    public TransferDetailsPanel0() {
         setLayout(null);
 
         lb1 = new JLabel("INTERNAL TRANSFER", JLabel.LEFT);

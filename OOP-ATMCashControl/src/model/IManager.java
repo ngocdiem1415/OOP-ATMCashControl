@@ -1,28 +1,29 @@
 package model;
 
 public interface IManager {
-    public boolean isCardAvailable(String card);
-    public boolean add(Card account);
+    boolean isCardAvailable(String card);
 
-    public boolean remove(Card account);
+    boolean add(Card account);
 
-    public String getCardNo();
+    boolean remove(Card account);
 
-    public String getUserName();
+    String getCardNo();
 
-    public boolean verifyAccount(String card, String PIN);
+    String getUserName();
 
-    public double isBalance();
+    boolean verifyAccount(String card, String PIN);
 
-    public boolean checkEnoughMoney(double i);
+    double isBalance();
 
-    public boolean isDeductAmount(String card, double i);
+    boolean checkEnoughMoney(double i);
 
-    public boolean changePIN(String newPIN);
+    boolean isTranferInternal(String card, double i);
 
-    public void data();
+    boolean changePIN(String newPIN);
 
-    boolean isWithDraw(double i, int typeCard);
+    void data();
+
+    boolean isWithDraw(double i);
 
     void logout();
 }

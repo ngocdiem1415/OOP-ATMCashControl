@@ -1,7 +1,7 @@
 package view;
 
 import view.aPage.ChangePINPanel;
-import view.aPage.TransferDetailsPanel;
+import view.aPage.TransferDetailsPanel1;
 import view.aPage.WithdrawPanel2;
 
 import java.awt.event.ActionEvent;
@@ -10,6 +10,7 @@ import java.awt.event.ActionListener;
 public class ButtonListener {
     HomePage homePage;
     int typeCard;
+
     public ButtonListener(HomePage homePage) {
         this.homePage = homePage;
         this.typeCard = -1;
@@ -19,30 +20,22 @@ public class ButtonListener {
         return new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                    homePage.visible();
-                    homePage.login.visible();
-                    typeCard = -1;
+                homePage.visible();
+                homePage.login.visible();
+                typeCard = -1;
 //                homePage.getData();
             }
         };
     }
 
+    //-----------------------------------------
+    // show cac panel
     public ActionListener showChoosen() {
         return new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 homePage.showChoosenPanel();
 
-            }
-        };
-    }
-
-
-    public ActionListener showIntrucduce() {
-        return new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                homePage.showIntruducePanel();
             }
         };
     }
@@ -66,81 +59,55 @@ public class ButtonListener {
         };
     }
 
-    public ActionListener showWithDraw0() {
+    public ActionListener isWithdraw() {
         return new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                homePage.showWithDrawPanel0();
-
+                homePage.showWithdrawPanel();
             }
         };
     }
 
-    public ActionListener showWithDraw1() {
+    public ActionListener isWithdrawOther() {
         return new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                homePage.showWithDrawPanel1();
-
+                homePage.showWithdrawPanel2();
             }
         };
     }
 
-    public ActionListener showMakeDeposits() {
+    public ActionListener showTranferDetailPanel0() {
         return new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                homePage.showWithDrawPanel1();
-
+                homePage.showTransferDetailsPanel0();
+//                System.out.println("showTransferDetailsPanel0");
             }
         };
     }
 
-    public ActionListener isWithdrawOneHundredThousand() {
+    public ActionListener showTranferDetailPanel1() {
         return new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                homePage.isWithDraw(100000,typeCard);
-
+                try {
+                    TransferDetailsPanel1.updataAccountToMakeDeposits(homePage, (TransferDetailsPanel1) homePage.transferDetailsPanel1);
+                    homePage.showTransferDetailsPanel1();
+                } catch (Exception a) {
+                    a.printStackTrace();
+                }
             }
         };
     }
 
-    public ActionListener isWithdrawTwoHundredThousand() {
+    public ActionListener tranferDetails() {
         return new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                homePage.isWithDraw(200000,typeCard);
-
-            }
-        };
-    }
-
-    public ActionListener isWithdrawThreeHundredThousand() {
-        return new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                homePage.isWithDraw(300000,typeCard);
-            }
-        };
-    }
-
-    public ActionListener isWithdrawOneMillion() {
-        return new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                homePage.isWithDraw(1000000,typeCard);
-
-            }
-        };
-    }
-
-    public ActionListener isWithdrawTwoMillion() {
-        return new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                homePage.isWithDraw(1000000,typeCard);
-
+                if (TransferDetailsPanel1.tranferInternal((TransferDetailsPanel1) homePage.transferDetailsPanel1)) {
+                    homePage.showCompletePanel();
+                }
             }
         };
     }
@@ -158,48 +125,65 @@ public class ButtonListener {
         return new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (ChangePINPanel.checkSynchronizationNewPIN((ChangePINPanel) homePage.changePINPanel)){
-                    homePage.showCompletePanel();
-                };
-            }
-        };
-    }
-
-    public ActionListener showMakeDepositPanel() {
-        return new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                homePage.showMakeDepositsPanel1();
-            }
-        };
-    }
-
-    public ActionListener showTransferDetails() {
-        return new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                TransferDetailsPanel.updataAccountToMakeDeposits(homePage, (TransferDetailsPanel) homePage.transferDetailsPanel);
-                homePage.showMakeDepositsPanel2();
-            }
-        };
-    }
-
-    public ActionListener makeDeposit() {
-        return new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                if (TransferDetailsPanel.makeDeposit((TransferDetailsPanel) homePage.transferDetailsPanel)) {
-                    homePage.showCompletePanel();
+                try {
+                    if (ChangePINPanel.checkSynchronizationNewPIN((ChangePINPanel) homePage.changePINPanel)) {
+                        homePage.showCompletePanel();
+                    }
+                } catch (Exception a) {
+                    a.printStackTrace();
                 }
             }
         };
     }
 
-    public ActionListener isWithdrawOther() {
+//-----------------------------------------
+// chon so tien can rut
+
+    public ActionListener isWithdrawOneHundredThousand() {
         return new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                homePage.showWithdrawPanel2();
+                homePage.isWithDraw(100000);
+
+            }
+        };
+    }
+
+    public ActionListener isWithdrawTwoHundredThousand() {
+        return new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                homePage.isWithDraw(200000);
+
+            }
+        };
+    }
+
+    public ActionListener isWithdrawThreeHundredThousand() {
+        return new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                homePage.isWithDraw(300000);
+            }
+        };
+    }
+
+    public ActionListener isWithdrawOneMillion() {
+        return new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                homePage.isWithDraw(1000000);
+
+            }
+        };
+    }
+
+    public ActionListener isWithdrawTwoMillion() {
+        return new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                homePage.isWithDraw(1000000);
+
             }
         };
     }
@@ -208,19 +192,13 @@ public class ButtonListener {
         return new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                WithdrawPanel2.isWithdrawAnyAmount(homePage, (WithdrawPanel2) homePage.withdrawPanel2,typeCard);
+                try {
+                    WithdrawPanel2.isWithdrawAnyAmount(homePage, (WithdrawPanel2) homePage.withdrawPanel2);
+                } catch (Exception a) {
+                    a.printStackTrace();
+                }
             }
         };
     }
 
-    public ActionListener getCommand() {
-        return new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                homePage.showWithDrawPanel1();
-//                typeCard = Integer.parseInt(e.getActionCommand());
-                System.out.println(typeCard);
-            }
-        };
-    }
 }

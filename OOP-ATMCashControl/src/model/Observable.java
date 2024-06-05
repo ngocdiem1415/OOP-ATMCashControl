@@ -19,7 +19,7 @@ public abstract class Observable {
     public void notifyObs( ){
         System.out.println("notifyobs");
         for (Observer obs: list ) {
-            obs.update();
+            obs.updata();
         }
     }
 

@@ -11,14 +11,8 @@ public class State {
 	final static Color clear_button = new Color(112, 128, 144);
 	final static Color red_button = new Color(220, 20, 60);
 	final static Color blue_button = new Color(0, 191, 255);
-//	  static final Color red_button      = new Color(255, 0, 0);
-
-	final static Icon logo_small = new ImageIcon("libs/logo-small.png");
 	final static Icon logo_big = new ImageIcon("libs/logo-big.png");
-
 	public static MouseAdapter retureHomePage(JComponent c, JFrame main, HomePage homePage) { // if c was clicked , hide
-																								// frame main and open a
-																								// HomePage()
 		return new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -30,7 +24,6 @@ public class State {
 					homePageFrame.setSize(1200, 700);
 					main.setVisible(false);
 				}
-
 			}
 		};
 

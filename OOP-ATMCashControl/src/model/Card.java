@@ -10,14 +10,11 @@ public abstract class Card {
     protected String firstName;
     protected String lastName;
     protected double accountBalance;
-
     // lam viec voi interface
     protected TransferFees transferFees;
     protected WithdrawalFees withdrawalFees;
-
     public Card() {
     }
-
     public Card(String id, String userName, String passWord, String firstName, String lastName, double accountBalance) {
         this.id = id;
         this.userName = userName;
@@ -31,16 +28,8 @@ public abstract class Card {
         return id;
     }
 
-    public void setId(String id) {
-        this.id = id;
-    }
-
     public String getUserName() {
         return userName;
-    }
-
-    public void setUserName(String userName) {
-        this.userName = userName;
     }
 
     public String getPassWord() {
@@ -51,22 +40,6 @@ public abstract class Card {
         this.passWord = passWord;
     }
 
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
-
     public double getAccountBalance() {
         return accountBalance;
     }
@@ -75,6 +48,29 @@ public abstract class Card {
         this.accountBalance = accountBalance;
     }
 
+    public double getBalance() {
+        return accountBalance;
+    }
+    public boolean checkCardAvailable(String card) {
+        return this.getId().equals(card) ? true: false;
+    }
+
+    public double isWithDraw(double i){
+        double newBalance = this.getAccountBalance() -i - withdrawalFees.withdrawal_Fees();
+        System.out.println(newBalance);
+        return newBalance;
+    }
+    public double isDeductAmount(double i){
+        double newBalance = this.getAccountBalance() -i - transferFees.transfer_Fees();
+        accountBalance = newBalance;
+        System.out.println(newBalance);
+        return newBalance;
+    }
+    public void amountReceived(double i) {
+        setAccountBalance(accountBalance + i );
+    }
+
+
     @Override
     public String toString() {
         String asw = "";
@@ -82,18 +78,4 @@ public abstract class Card {
         asw += "\n First name: " + firstName + "\tLast name: " + lastName;
         return asw;
     }
-
-    public double getBalance() {
-        return accountBalance;
-    }
-
-    public double transferFees(){
-        return transferFees.transfer_Fees();
-    }
-
-    public double withdrawalFees(){
-        return withdrawalFees.withdrawal_Fees();
-    }
-
-    public abstract double isWithDraw(double i, int typeCard);
 }
