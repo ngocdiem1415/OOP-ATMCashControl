@@ -8,7 +8,6 @@ public class ImageSetting {
 
     public ImageSetting() {
     }
-
     public Image mainImage(){
         image = new ImageIcon("src/image/screen_main.jpg").getImage();
         return image;

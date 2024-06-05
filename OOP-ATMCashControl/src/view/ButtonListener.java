@@ -1,45 +1,41 @@
 package view;
 
 import view.aPage.ChangePINPanel;
-import view.aPage.TransferDetailsPanel;
+import view.aPage.TransferDetailsPanel1;
 import view.aPage.WithdrawPanel2;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class ButtonListener implements AuthButtonListener {
+public class ButtonListener {
     HomePage homePage;
+    int typeCard;
+
     public ButtonListener(HomePage homePage) {
         this.homePage = homePage;
+        this.typeCard = -1;
     }
 
     public ActionListener logout() {
         return new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                    homePage.setVisible(false);
-                    homePage.login.visible();
+                homePage.visible();
+                homePage.login.visible();
+                typeCard = -1;
 //                homePage.getData();
             }
         };
     }
 
+    //-----------------------------------------
+    // show cac panel
     public ActionListener showChoosen() {
         return new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 homePage.showChoosenPanel();
 
-            }
-        };
-    }
-
-
-    public ActionListener showIntrucduce() {
-        return new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                homePage.showIntruducePanel();
             }
         };
     }
@@ -63,25 +59,85 @@ public class ButtonListener implements AuthButtonListener {
         };
     }
 
-    public ActionListener showWithDraw() {
+    public ActionListener isWithdraw() {
         return new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                homePage.showWithDrawPanel1();
-
+                homePage.showWithdrawPanel();
             }
         };
     }
 
-    public ActionListener showMakeDeposits() {
+    public ActionListener isWithdrawOther() {
         return new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                homePage.showWithDrawPanel1();
-
+                homePage.showWithdrawPanel2();
             }
         };
     }
+
+    public ActionListener showTranferDetailPanel0() {
+        return new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                homePage.showTransferDetailsPanel0();
+//                System.out.println("showTransferDetailsPanel0");
+            }
+        };
+    }
+
+    public ActionListener showTranferDetailPanel1() {
+        return new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                try {
+                    TransferDetailsPanel1.updataAccountToMakeDeposits(homePage, (TransferDetailsPanel1) homePage.transferDetailsPanel1);
+                    homePage.showTransferDetailsPanel1();
+                } catch (Exception a) {
+                    a.printStackTrace();
+                }
+            }
+        };
+    }
+
+    public ActionListener tranferDetails() {
+        return new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (TransferDetailsPanel1.tranferInternal((TransferDetailsPanel1) homePage.transferDetailsPanel1)) {
+                    homePage.showCompletePanel();
+                }
+            }
+        };
+    }
+
+    public ActionListener showChangePIN() {
+        return new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                homePage.showChangePIN();
+            }
+        };
+    }
+
+    public ActionListener checkChangePIN() {
+        return new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                try {
+                    if (ChangePINPanel.checkSynchronizationNewPIN((ChangePINPanel) homePage.changePINPanel)) {
+                        homePage.showCompletePanel();
+                    }
+                } catch (Exception a) {
+                    a.printStackTrace();
+                }
+            }
+        };
+    }
+
+//-----------------------------------------
+// chon so tien can rut
 
     public ActionListener isWithdrawOneHundredThousand() {
         return new ActionListener() {
@@ -132,71 +188,17 @@ public class ButtonListener implements AuthButtonListener {
         };
     }
 
-    public ActionListener showChangePIN() {
+    public ActionListener isWithdrawAnyAmount() {
         return new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                homePage.showChangePIN();
-            }
-        };
-    }
-
-    public ActionListener checkChangePIN() {
-        return new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                if (ChangePINPanel.checkSynchronizationNewPIN((ChangePINPanel) homePage.changePINPanel)){
-                    homePage.showCompletePanel();
-                };
-            }
-        };
-    }
-
-    public ActionListener showMakeDepositPanel() {
-        return new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                homePage.showMakeDepositsPanel1();
-            }
-        };
-    }
-
-    public ActionListener showTransferDetails() {
-        return new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                TransferDetailsPanel.updataAccountToMakeDeposits(homePage, (TransferDetailsPanel) homePage.transferDetailsPanel);
-                homePage.showMakeDepositsPanel2();
-            }
-        };
-    }
-
-    public ActionListener makeDeposit() {
-        return new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                if (TransferDetailsPanel.makeDeposit((TransferDetailsPanel) homePage.transferDetailsPanel)) {
-                    homePage.showCompletePanel();
+                try {
+                    WithdrawPanel2.isWithdrawAnyAmount(homePage, (WithdrawPanel2) homePage.withdrawPanel2);
+                } catch (Exception a) {
+                    a.printStackTrace();
                 }
             }
         };
     }
 
-    public ActionListener isWithdrawOther() {
-        return new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                homePage.showWithdrawPanel2();
-            }
-        };
-    }
-
-    public ActionListener isWithdrawAnyAmount() {
-        return new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                WithdrawPanel2.isWithdrawAnyAmount(homePage, (WithdrawPanel2) homePage.withdrawPanel2);
-            }
-        };
-    }
 }

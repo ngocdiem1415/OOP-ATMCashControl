@@ -6,11 +6,12 @@ import view.HomePage;
 import javax.swing.*;
 import java.awt.*;
 
-public class WithdrawPanel2 extends AbstractPanel{
+public class WithdrawPanel2 extends AbstractPanel {
     JLabel lb1, cancel, enter;
     public JTextField tf1;
     IController controller;
     HomePage homePage;
+
     public WithdrawPanel2(IController controller, HomePage homePage) {
         this.homePage = homePage;
         this.controller = controller;
@@ -42,6 +43,11 @@ public class WithdrawPanel2 extends AbstractPanel{
     public static void isWithdrawAnyAmount(HomePage homePage, WithdrawPanel2 withdrawPanel2) {
         double money = Double.parseDouble(withdrawPanel2.tf1.getText());
         System.out.println(money);
-        homePage.isWithDraw(money);
+        if ((money % 100000.0) != 0) {
+            JOptionPane.showMessageDialog(null, "The amount you withdraw must be a number of 100 000", "Error",
+                    JOptionPane.ERROR_MESSAGE);
+        } else {
+            homePage.isWithDraw(money);
+        }
     }
 }

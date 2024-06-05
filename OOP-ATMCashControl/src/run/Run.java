@@ -1,9 +1,10 @@
 package run;
 
 import control.Controller;
-import model.AccountBank;
+import model.Card;
 import model.CreditCard;
-import model.ManagerAccount;
+import model.ManagerCard;
+import model.VisaCard;
 
 import java.awt.*;
 
@@ -14,17 +15,16 @@ public class Run {
             @Override
             public void run() {
                 try {
-                    ManagerAccount test = new ManagerAccount();
+                    ManagerCard test = new ManagerCard();
                     Controller controller = new Controller(test);
 
-                    AccountBank a1 = new CreditCard("21130298", "vuxuanchien", "21130298", "XUAN CHIEN", "VU", 1000000.0);
-                    AccountBank a2 = new CreditCard("21130299", "dovietcuong", "21130299", "VIET CUONG", "DO", 1200000.0);
-                    AccountBank a3 = new CreditCard("21130300", "nguyencaocuong", "21130300", "CAO CUONG", "NGUYEN", 200000.0);
-                    AccountBank a4 = new CreditCard("21130342", "ngoduchai", "21130342", "DUC HAI", "NGO", 5000000.0);
-                    AccountBank a5 = new CreditCard("21154163", "vutruonghai", "21154163", "TRUONG HAI", "VU", 7950000.0);
-                    AccountBank a6 = new CreditCard("21130279", "tranquibang", "21130279", "QUI BANG", "TRAN", 999999999.0);
-
-                    AccountBank a7 = new CreditCard("1", "tranquibang", "1", "QUI BANG", "TRAN", 9999.0);
+                    Card a1 = new CreditCard("22130038", "Nguyen Thi Ngoc Diem", "22130038", "Diem", "Nguyen", 1000000.0);
+                    Card a2 = new CreditCard("1", "Nguyen Van Ba", "1", "Ba", "Nguyen", 1200000.0);
+                    Card a3 = new CreditCard("2", "Nguyen Hoang Bich", "2", "Bich", "Nguyen", 200000.0);
+                    Card a4 = new CreditCard("3", "Nguyen Van Dung", "3", "Dung", "Nguyen", 5000000.0);
+                    Card a5 = new VisaCard("11", "Huynh Thi Hoa", "11", "Hoa", "Huynh", 7950000.0);
+                    Card a6 = new VisaCard("12", "Tran Anh Thu", "12", "Thu", "Tran", 999999999.0);
+                    Card a7 = new VisaCard("13", "Tran Thi Hue", "13", "Hue", "Tran", 99999.0);
                     test.add(a7);
 
                     test.add(a1);

@@ -18,8 +18,9 @@ public class Login extends JFrame {
     private IController controller;
     private JTextField txtUsername;
     private JPasswordField txtPassword;
-    private JLabel lbtitle, lbCard, lbPassword;
+    private JLabel lbtitle,lblIconUser, lbCard, lbPassword, lblLogin;
     private JButton btnLogin;
+    private JPanel pnlMain;
 
     public Login(Observable obs, IController controller) {
         this.obs = obs;
@@ -37,7 +38,7 @@ public class Login extends JFrame {
         setLocationRelativeTo(null);
         getContentPane().setLayout(null);
 
-        JPanel pnlMain = new JPanel();
+        pnlMain = new JPanel();
         pnlMain.setLayout(null);
         pnlMain.setBounds(10, 11, 614, 539);
         pnlMain.setBackground(State.background);
@@ -49,17 +50,10 @@ public class Login extends JFrame {
         lbtitle.setBounds(200, 160, 450, 40);
         pnlMain.add(lbtitle);
 
-        JLabel lblIconUser = new JLabel("");
+        lblIconUser = new JLabel("");
         lblIconUser.setIcon(image.loginImage());
         lblIconUser.setBounds(250, 10, 150, 150);
         pnlMain.add(lblIconUser);
-
-        txtUsername = new JTextField();
-        txtUsername.setFont(new Font("Times New Roman", Font.PLAIN, 22));
-        txtUsername.setHorizontalAlignment(SwingConstants.LEFT);
-        txtUsername.setColumns(8);
-        txtUsername.setBounds(170, 232, 409, 44);
-        pnlMain.add(txtUsername);
 
         lbCard = new JLabel("Card No: ");
         lbCard.setFont(new Font("Times New Roman", Font.BOLD, 22));
@@ -67,18 +61,27 @@ public class Login extends JFrame {
         lbCard.setBounds(50, 232, 409, 44);
         pnlMain.add(lbCard);
 
-        txtPassword = new JPasswordField();
-        txtPassword.setFont(new Font("Times New Roman", Font.PLAIN, 22));
-        txtPassword.setHorizontalAlignment(SwingConstants.LEFT);
-        txtPassword.setColumns(8);
-        txtPassword.setBounds(170, 321, 409, 44);
-        pnlMain.add(txtPassword);
+        txtUsername = new JTextField();
+        txtUsername.setText("22130038");
+        txtUsername.setFont(new Font("Times New Roman", Font.PLAIN, 22));
+        txtUsername.setHorizontalAlignment(SwingConstants.LEFT);
+        txtUsername.setColumns(8);
+        txtUsername.setBounds(170, 232, 409, 44);
+        pnlMain.add(txtUsername);
 
         lbPassword = new JLabel("PIN: ");
         lbPassword.setFont(new Font("Times New Roman", Font.BOLD, 22));
         lbPassword.setForeground(Color.WHITE);
         lbPassword.setBounds(50, 321, 409, 44);
         pnlMain.add(lbPassword);
+
+        txtPassword = new JPasswordField();
+        txtPassword.setText("22130038");
+        txtPassword.setFont(new Font("Times New Roman", Font.PLAIN, 22));
+        txtPassword.setHorizontalAlignment(SwingConstants.LEFT);
+        txtPassword.setColumns(8);
+        txtPassword.setBounds(170, 321, 409, 44);
+        pnlMain.add(txtPassword);
 
         btnLogin = new JButton("LOGIN");
         btnLogin.setBackground(State.background);
@@ -89,7 +92,7 @@ public class Login extends JFrame {
         btnLogin.setBorder(new LineBorder(Color.WHITE, 3));
         pnlMain.add(btnLogin);
 
-        JLabel lblLogin = new JLabel("");
+        lblLogin = new JLabel("");
         lblLogin.setIcon(State.logo_big);
         lblLogin.setBounds(65, -40, 263, 251);
         pnlMain.add(lblLogin);
@@ -135,23 +138,14 @@ public class Login extends JFrame {
 
             HomePage homePage = new HomePage(obs, controller, this);
             homePage.setVisible(true);
-//            JFrame homePageFrame2 = new HomePage(obs, controller, this);
-//            homePageFrame2.setVisible(true);
-//			JFrame homePageFrame3 = new HomePage(obs, controller, this);
-//			homePageFrame3.setVisible(true);
-//			JFrame homePageFrame4 = new HomePage(obs, controller, this);
-//			homePageFrame4.setVisible(true);
-//			JFrame homePageFrame5 = new HomePage(obs, controller, this);
-//			homePageFrame5.setVisible(true);
         } else {
-            JOptionPane.showMessageDialog(null, "Card No or PIN is incorect", "Error",
+            JOptionPane.showMessageDialog(null, "Card No or PIN is incorect",
+                    "Error",
                     JOptionPane.ERROR_MESSAGE);
         }
     }
 
     public void visible() {
-        this.txtPassword.setText("");
-        this.txtUsername.setText("");
         this.setVisible(true);
     }
 
